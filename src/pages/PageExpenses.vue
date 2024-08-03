@@ -1,6 +1,19 @@
 <template>
   <scroll-page>
-    <div v-if="Object.keys(expenses).length">
+    <div
+      v-if="Object.keys(expenses).length"
+      class="q-mb-xl"
+    >
+      <q-btn
+        unelevated
+        outline
+        icon="add_circle"
+        type="submit"
+        color="primary"
+        label="Add new expense"
+        class="absolute-top-right q-mr-lg q-mt-sm"
+        @click="showAddExpense = true"
+      />
       <big-title>Expenses</big-title>
       <expense-list
         :expenses="expenses"
@@ -17,17 +30,6 @@
     />
 
     <template v-slot:after-scroll-area>
-      <div class="absolute-bottom text-center q-mb-lg no-pointer-events">
-        <q-btn
-          @click="showAddExpenseDialog"
-          round
-          color="primary"
-          size="24px"
-          icon="add"
-          class="all-pointer-events"
-        />
-      </div>
-
       <q-dialog
         v-model="showAddExpense"
         position="top"
