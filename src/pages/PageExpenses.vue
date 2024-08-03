@@ -11,7 +11,7 @@
         type="submit"
         color="primary"
         label="Add new expense"
-        class="absolute-top-right q-mr-lg q-mt-sm"
+        class="absolute-top-right q-mt-sm"
         @click="showAddExpense = true"
       />
       <big-title>Expenses</big-title>
@@ -29,19 +29,17 @@
       v-else
     />
 
-    <template v-slot:after-scroll-area>
-      <q-dialog
-        v-model="showAddExpense"
-        position="top"
-        no-refocus
-      >
-        <add-expense
-          @close="showAddExpense = false"
-          :year="year"
-          :month="month"
-        />
-      </q-dialog>
-    </template>
+    <q-dialog
+      v-model="showAddExpense"
+      position="top"
+      no-refocus
+    >
+      <add-expense
+        @close="showAddExpense = false"
+        :year="year"
+        :month="month"
+      />
+    </q-dialog>
   </scroll-page>
 </template>
 
