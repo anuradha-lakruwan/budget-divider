@@ -1,14 +1,21 @@
 <template>
   <q-banner
+    inline-actions
     rounded
     class="bg-grey-3"
   >
     <template v-slot:avatar>
       <q-icon
-        name="help_outline"
+        :name="icon"
         color="primary"
       />
     </template>
-    There is no collection yet. Add a new collection and it will show up here.
+    <slot></slot>
   </q-banner>
 </template>
+
+<script>
+export default {
+  props: ['icon'],
+};
+</script>
