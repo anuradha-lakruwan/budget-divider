@@ -9,13 +9,11 @@ If you want to give it a try, you can install it for free (see section below) or
 ## How to install
 
 ### Requirements
-You can install this application for free, you just need a Google account to create a Firebase project and a Firebase application.
+You can install this application for free, you just need a Google account to create a Firebase project.
 
-### Configure Firebase project and application
+### Create a Firebase project
 
 Sign in on the [Firebase Console](https://console.firebase.google.com) with your Google Account and create a new Firebase project.
-
-Add a Firebase Web application to this project and enable Firebase Hosting. Configure the URL of your Web application.
 
 ### Install firebase-tools
 
@@ -29,21 +27,14 @@ Then run this command to login :
 $ firebase-tools login
 ```
 
-### Build the project
+### Build and deploy the project
 
-Clone the `expense-tracker` project and edit the `hosting.site` value of the `firebase.json` file with the URL of your Web application (without the `.web.app` extension).
-
-For example, if your Web application URL is : `my-awesome-app.web.app`, update the file like this :
-```json
-  ...
-  "hosting": {
-    "site": "my-awesome-app",
-    "public": "dist/spa"
-  },
-  ...
+Clone the `expense-tracker` project and build it :
+```
+$ npm run build
 ```
 
-Then run this command (replace `PROJECT_NAME` with the name of your project) so that firebase knows which project to deploy :
+Then run this command so that firebase knows which project to deploy :
 ```bash
 $ firebase use PROJECT_NAME
 ```
@@ -53,4 +44,4 @@ Finally, execute this command to deploy the project
 $ firebase deploy
 ```
 
-Ta-da! Your project is now deployed and available on firebase !
+Ta-da! Your project is now deployed and available on Firebase.
