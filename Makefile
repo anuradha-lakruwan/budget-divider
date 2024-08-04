@@ -1,7 +1,7 @@
-.PHONY: docker-dev docker-deploy
+.PHONY: start db
 
-docker-dev:
-	docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+start:
+	docker-compose up
 
-docker-deploy:
-	docker-compose -f docker-compose.yml -f docker-compose.deploy.yml up
+db:
+	docker exec -it expensetracker_db psql -U postgres --dbname=expense-tracker
