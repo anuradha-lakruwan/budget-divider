@@ -6,15 +6,15 @@
     use-input
     fill-input
     hide-selected
-    :value="name"
+    :value="color"
     :options="options"
-    @input="$emit('update:name', $event)"
+    @input="$emit('update:color', $event)"
     @filter="filter"
     :rules="[val => !!val || 'Please choose a value']"
-    label="Icon"
+    label="Color"
   >
     <template v-slot:prepend>
-      <q-icon name="insert_photo" />
+      <q-icon name="palette" />
     </template>
     <template v-slot:option="scope">
       <q-item
@@ -23,8 +23,8 @@
       >
         <q-item-section avatar>
           <q-icon
-            :name="scope.opt"
-            :color="color"
+            :name="name"
+            :color="scope.opt"
           />
         </q-item-section>
         <q-item-section>
@@ -36,20 +36,20 @@
 </template>
 
 <script>
-import materialIcons from 'src/data/material-icons';
+import colorPalette from 'src/data/color-palette';
 
 export default {
-  props: ['name', 'color'],
+  props: ['color', 'name'],
   data() {
     return {
-      options: materialIcons,
+      options: colorPalette,
     };
   },
   methods: {
     filter(val, update) {
       update(() => {
         const needle = val.toLowerCase();
-        this.options = materialIcons.filter((option) => option.indexOf(needle) > -1);
+        this.options = colorPalette.filter((option) => option.indexOf(needle) > -1);
       });
     },
   },

@@ -5,11 +5,9 @@
   >
     <modal-name-input
       :name.sync="formData.name"
-      autofocus="true"
-      class="q-mb-sm"
+      :autofocus="$q.platform.is.desktop"
     />
-
-    <modal-icon-input :icon.sync="formData.icon" />
+    <modal-icon-color-input :icon.sync="formData.icon" />
   </modal>
 </template>
 

@@ -6,8 +6,8 @@
   >
     <q-item-section avatar>
       <q-icon
-        :name="collection.icon"
-        color="green"
+        :name="collection.icon.name"
+        :color="collection.icon.color"
       />
     </q-item-section>
     <q-item-section>{{ collection.name }}</q-item-section>
@@ -33,23 +33,20 @@
       </div>
     </q-item-section>
 
-    <q-dialog
-      v-model="showEditCollection"
-      position="top"
-      no-refocus
-    >
+    <app-dialog :showDialog.sync="showEditCollection">
       <edit-collection
         :id="id"
         :collection="collection"
         @close="showEditCollection = false"
       />
-    </q-dialog>
+    </app-dialog>
   </q-item>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
 import EditCollection from 'src/components/Collections/Modals/EditCollection';
+import AppDialog from 'src/components/Shared/Dialog/Dialog';
 
 export default {
   props: ['id', 'collection'],
@@ -60,6 +57,7 @@ export default {
   },
   components: {
     EditCollection,
+    AppDialog,
   },
   methods: {
     ...mapActions('collections', ['deleteCollection']),

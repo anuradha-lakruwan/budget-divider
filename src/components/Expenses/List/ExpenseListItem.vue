@@ -6,8 +6,8 @@
   >
     <q-item-section avatar>
       <q-icon
-        :name="categoryIcon"
-        color="green"
+        :name="categoryIconName"
+        :color="categoryIconColor"
       />
 
     </q-item-section>
@@ -33,18 +33,14 @@
       </div>
     </q-item-section>
 
-    <q-dialog
-      v-model="showEditExpense"
-      position="top"
-      no-refocus
-    >
+    <app-dialog :showDialog.sync="showEditExpense">
       <edit-expense
         :id="id"
         :expense="expense"
         :collectionId="collectionId"
         @close="showEditExpense = false"
       />
-    </q-dialog>
+    </app-dialog>
   </q-item>
 </template>
 
@@ -53,6 +49,7 @@ import { date } from 'quasar';
 import { mapState, mapActions } from 'vuex';
 import EditExpense from 'src/components/Expenses/Modals/EditExpense';
 import mixinPrice from 'src/mixins/mixin-price';
+import AppDialog from 'src/components/Shared/Dialog/Dialog';
 
 export default {
   mixins: [mixinPrice],
@@ -71,15 +68,22 @@ export default {
       }
       return this.users[this.expense.paidBy].name;
     },
-    categoryIcon() {
+    categoryIconName() {
       if (!this.categories[this.expense.category]) {
         return 'help_outline';
       }
-      return this.categories[this.expense.category].icon;
+      return this.categories[this.expense.category].icon.name;
+    },
+    categoryIconColor() {
+      if (!this.categories[this.expense.category]) {
+        return 'primary';
+      }
+      return this.categories[this.expense.category].icon.color;
     },
   },
   components: {
     EditExpense,
+    AppDialog,
   },
   filters: {
     formatDate(value) {
