@@ -10,16 +10,12 @@
       </q-inner-loading>
     </q-page>
 
-    <scroll-page v-else>
-
-      <right-side-button
-        label="Add new expense"
-        icon="add_circle"
-        @click="showAddExpense = true"
-      />
-
-      <big-title>Expenses</big-title>
-
+    <scroll-page
+      v-else
+      title="Expenses"
+      actionName="Add new expense"
+      :actionModel.sync="showAddExpense"
+    >
       <div
         v-if="Object.keys(expenses).length"
         class="q-mb-xl"
@@ -53,16 +49,13 @@
 
 <script>
 import { mapGetters, mapActions, mapState } from 'vuex';
+import mixinPage from 'src/mixins/mixin-page';
 import AddExpense from 'src/components/Expenses/Modals/AddExpense';
 import ExpenseList from 'src/components/Expenses/List/ExpenseList';
 import ExpenseSummary from 'src/components/Expenses/Summary/ExpenseSummary';
-import NoResourceBanner from 'src/components/Shared/Banners/NoResourceBanner';
-import BigTitle from 'src/components/Shared/BigTitle';
-import ScrollPage from 'src/components/Shared/ScrollPage';
-import RightSideButton from 'src/components/Shared/Buttons/RightSideButton';
-import AppDialog from 'src/components/Shared/Dialog/Dialog';
 
 export default {
+  mixins: [mixinPage],
   props: ['collectionId'],
   data() {
     return {
@@ -86,11 +79,6 @@ export default {
     AddExpense,
     ExpenseList,
     ExpenseSummary,
-    NoResourceBanner,
-    BigTitle,
-    ScrollPage,
-    RightSideButton,
-    AppDialog,
   },
   watch: {
     collectionId() {

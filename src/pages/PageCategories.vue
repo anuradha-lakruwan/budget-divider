@@ -1,13 +1,9 @@
 <template>
-  <scroll-page>
-    <right-side-button
-      label="Add new category"
-      icon="add_circle"
-      @click="showAddCategory = true"
-    />
-
-    <big-title>Categories</big-title>
-
+  <scroll-page
+    title="Categories"
+    actionName="Add new category"
+    :actionModel.sync="showAddCategory"
+  >
     <category-list
       :categories="categories"
       v-if="Object.keys(categories).length"
@@ -25,28 +21,20 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import ScrollPage from 'src/components/Shared/ScrollPage';
-import BigTitle from 'src/components/Shared/BigTitle';
+import mixinPage from 'src/mixins/mixin-page';
 import CategoryList from 'src/components/Categories/List/CategoryList';
 import AddCategory from 'src/components/Categories/Modals/AddCategory';
-import NoResourceBanner from 'src/components/Shared/Banners/NoResourceBanner';
-import RightSideButton from 'src/components/Shared/Buttons/RightSideButton';
-import AppDialog from 'src/components/Shared/Dialog/Dialog';
 
 export default {
+  mixins: [mixinPage],
   data() {
     return {
       showAddCategory: false,
     };
   },
   components: {
-    ScrollPage,
-    BigTitle,
     CategoryList,
     AddCategory,
-    NoResourceBanner,
-    RightSideButton,
-    AppDialog,
   },
   computed: {
     ...mapGetters('categories', ['categories']),

@@ -1,10 +1,16 @@
 import { Loading } from 'quasar';
+import { showErrorMessageWithTitle } from 'src/functions/show-error-message';
 
 export function loadData({ dispatch }) {
   Loading.show();
-  dispatch('categories/firebaseReadData', null, { root: true });
-  dispatch('collections/firebaseReadData', null, { root: true });
-  dispatch('users/firebaseReadData', null, { root: true });
+  try {
+    dispatch('categories/firebaseReadData', null, { root: true });
+    dispatch('collections/firebaseReadData', null, { root: true });
+    dispatch('users/firebaseReadData', null, { root: true });
+  } catch (error) {
+    Loading.hide();
+    showErrorMessageWithTitle('Could not load Firebase data', 'Please make sure you configured properly Firebase credentials.');
+  }
 }
 
 export function loadExpenseData({ dispatch }, collectionId) {
@@ -38,4 +44,12 @@ export function setUsersLoaded({ commit, getters }, value) {
 
 export function setExpensesLoaded({ commit }, value) {
   commit('setExpensesLoaded', value);
+}
+
+export function setCurrentPage({ commit }, value) {
+  commit('setCurrentPage', value);
+}
+
+export function setToolbarAction({ commit }, value) {
+  commit('setToolbarAction', value);
 }
