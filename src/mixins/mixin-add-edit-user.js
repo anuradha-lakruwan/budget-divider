@@ -7,8 +7,13 @@ export default {
     return {
       formData: {
         name: null,
-        count: 0,
-        icon: 'calendar_today',
+        icon: {
+          name: 'face',
+          color: 'blue-4',
+        },
+        settings: {
+          weight: 0.5,
+        },
       },
     };
   },

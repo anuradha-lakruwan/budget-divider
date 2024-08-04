@@ -1,28 +1,28 @@
 <template>
   <modal
-    title="Add collection"
-    @success="saveCollection"
+    title="Add user"
+    @success="saveUser"
   >
     <modal-name-input
       :name.sync="formData.name"
       autofocus="true"
       class="q-mb-sm"
     />
-    <modal-icon-input :icon.sync="formData.icon" />
+
+    <modal-icon-input :icon.sync="formData.icon.name" />
   </modal>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
-import mixinAddEditCollection from 'src/mixins/mixin-add-edit-collection';
+import mixinAddEditUser from 'src/mixins/mixin-add-edit-user';
 
 export default {
-  mixins: [mixinAddEditCollection],
-  props: ['collectionId'],
+  mixins: [mixinAddEditUser],
   methods: {
-    ...mapActions('collections', ['addCollection']),
-    saveCollection() {
-      this.addCollection(this.formData);
+    ...mapActions('users', ['addUser']),
+    saveUser() {
+      this.addUser(this.formData);
       this.$emit('close');
     },
   },

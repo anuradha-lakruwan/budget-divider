@@ -1,21 +1,22 @@
 import { uid } from 'quasar';
+import { firebaseDb } from 'src/boot/firebase';
+import { firebaseAction } from 'vuexfire';
+import { firebaseSetValue, firebaseUpdateValue, firebaseRemoveValue } from 'src/database/firebase';
 
-export function addExpense({ commit, dispatch }, payload) {
-  commit('addExpense', {
-    id: uid(),
-    collectionId: payload.collectionId,
-    expense: payload.expense,
-  });
-
-  dispatch('collections/expenseAdded', payload.collectionId, { root: true });
+export function addExpense(context, payload) {
+  firebaseSetValue(`expenses/${payload.collectionId}/${uid()}`, payload.expense, { successMessage: 'Expense added!' });
 }
 
-export function updateExpense({ commit }, payload) {
-  commit('updateExpense', payload);
+export function updateExpense(context, payload) {
+  firebaseUpdateValue(`expenses/${payload.collectionId}/${payload.id}`, payload.updates, { successMessage: 'Expense updated!' });
 }
 
-export function deleteExpense({ commit, dispatch }, payload) {
-  commit('deleteExpense', payload);
-
-  dispatch('collections/expenseDeleted', payload.collectionId, { root: true });
+export function deleteExpense(context, payload) {
+  firebaseRemoveValue(`expenses/${payload.collectionId}/${payload.id}`, { successMessage: 'Expense deleted!' });
 }
+
+export const firebaseReadData = firebaseAction(
+  ({ bindFirebaseRef, dispatch }, collectionId) => bindFirebaseRef('expenses', firebaseDb.ref('expenses').child(collectionId)).then(() => {
+    dispatch('app/setExpensesLoaded', true, { root: true });
+  }),
+);

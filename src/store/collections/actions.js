@@ -1,29 +1,22 @@
 import { uid } from 'quasar';
+import { firebaseDb } from 'src/boot/firebase';
+import { firebaseAction } from 'vuexfire';
+import { firebaseSetValue, firebaseUpdateValue, firebaseRemoveValue } from 'src/database/firebase';
 
-export function addCollection({ commit }, collection) {
-  commit('addCollection', {
-    id: uid(),
-    collection,
-  });
-}
-
-export function updateCollection({ commit }, payload) {
-  commit('updateCollection', payload);
-}
-export function deleteCollection({ commit }, id) {
-  commit('deleteCollection', id);
+export function addCollection(context, collection) {
+  firebaseSetValue(`collections/${uid()}`, collection, { successMessage: 'Collection added!' });
 }
 
-export function expenseAdded({ commit, getters }, id) {
-  // TODO : Use firebase database triggers instead.
-  Object.keys(getters.parents(id)).forEach((collectionId) => {
-    commit('incrementCount', collectionId);
-  });
+export function updateCollection(context, payload) {
+  firebaseUpdateValue(`collections/${payload.id}`, payload.updates, { successMessage: 'Collection updated!' });
 }
 
-export function expenseDeleted({ commit, getters }, id) {
-  // TODO : Use firebase database triggers instead.
-  Object.keys(getters.parents(id)).forEach((collectionId) => {
-    commit('decrementCount', collectionId);
-  });
+export function deleteCollection(context, id) {
+  firebaseRemoveValue(`collections/${id}`, { successMessage: 'Collection deleted!' });
 }
+
+export const firebaseReadData = firebaseAction(
+  ({ bindFirebaseRef, dispatch }) => bindFirebaseRef('collections', firebaseDb.ref('collections')).then(() => {
+    dispatch('app/setCollectionsLoaded', true, { root: true });
+  }),
+);

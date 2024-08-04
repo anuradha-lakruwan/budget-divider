@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import { vuexfireMutations } from 'vuexfire';
+import app from './app';
 import collections from './collections';
 import expenses from './expenses';
 import users from './users';
@@ -20,10 +22,15 @@ Vue.use(Vuex);
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
+      app,
       collections,
       expenses,
       users,
       categories,
+    },
+
+    mutations: {
+      ...vuexfireMutations,
     },
 
     // enable strict mode (adds overhead!)
